@@ -1,31 +1,46 @@
 #fetch lowest bid and highest ask between bybit and bitmex 
-
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+from matplotlib import style
 import ccxt
+import time
+import datetime
+import os
 #initialize exchanges and load markets
 exchange = ccxt.bitmex() 
 exchange2 = ccxt.bybit()
 markets = exchange.load_markets()
 markets2 = exchange2.load_markets()
+#find percent difference for every 5 seconds
+
+#dictionary of exchanges
+exchangedict = {}
+while True:
+    now = datetime.datetime.now()
+    bitmex_fetch = exchange.fetch_ticker('BTC/USD')
+    bybit_fetch = exchange2.fetch_ticker('BTC/USD')
+    #scrape ticker fetch and add to lists
+    exchangedict.update({'bitmex':(bitmex_fetch['bid'], bitmex_fetch['ask']),'bybit':(bybit_fetch['bid'], bybit_fetch['ask'])})
+
+    #results
+    print('=======================')
+    print(now)
+    print(exchangedict)
+    print('=======================')
+
+    #send results to plot file
+    current_time = now.strftime("%H:%M:%S")
+    send_data = open('plot.txt', 'a')
+    send_data.write(str(current_time) + ',')
+    send_data.write(str(exchangedict))
+    send_data.write('\n')
 
 
+    send_data.close()
 
-#separate dictionaries of current bid and ask among exchanges
-ask_list = {}
-bid_list = {}
 
-bitmex_fetch = exchange.fetch_ticker('BTC/USD')
-bybit_fetch = exchange2.fetch_ticker('BTC/USD')
-#scrape ticker fetch and add to lists
-ask_list.update({'bitmex':bitmex_fetch['ask']})
-ask_list.update({'bybit':bybit_fetch['ask']})
-bid_list.update({'bitmex':bitmex_fetch['bid']})
-bid_list.update({'bybit':bybit_fetch['bid']})
+  
+    time.sleep(5)
 
-#results
-highest_ask = max(ask_list, key=ask_list.get) 
-lowest_bid = min(bid_list, key=bid_list.get) 
 
-print('ask list: ' + str(ask_list), ('bid list: ' + str(bid_list)))
-print('Lowest bid:' + lowest_bid, str(bid_list[lowest_bid]))
-print('Highest ask:' + highest_ask, str(ask_list[highest_ask]))
 
