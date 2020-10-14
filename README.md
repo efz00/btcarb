@@ -8,7 +8,7 @@ The tuples are returned in a dictionary with the keys as the respective exchange
 
 
 
-ADDED:
-Simplified data
+ADDED: <br>
+Simplified data<br>
 Loop that outputs every 5 seconds
 Prices are also store in csv every 5 seconds
