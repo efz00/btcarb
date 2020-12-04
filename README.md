@@ -2,6 +2,8 @@
 
 Bitcoin Futures arbitrage trading bot that connects to Phemex and Bitmex futures exchanges.
 
+<h1>How it works:</h1>
+
 Test mode lets you to switch between real, and testnet api keys.
 
 Live logging in terminal allows you to watch the bot in action, and CSV logging allows you to code indicators and gives the bot a memory of past price action.
